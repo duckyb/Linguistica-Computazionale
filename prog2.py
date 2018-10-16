@@ -70,47 +70,47 @@ class Corpus:
         return [big_max, max_found]
 
 def main():
-    # # tabella senza punteggiatura
-    # headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella aggettivi
-    # headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella verbi
-    # headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella top 10 parts of speech
-    # headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella trigrammi
-    # headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
-    # records = []
-    # for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
-    #     records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
-    # print '\n', tabulate(records, headers)
+    # tabella senza punteggiatura
+    headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
+    records = []
+    for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
+        records.append([a, b, c, d])
+    print '\n', tabulate(records, headers)
+    # tabella aggettivi
+    headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
+    records = []
+    for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
+        records.append([a, b, c, d])
+    print '\n', tabulate(records, headers)
+    # tabella verbi
+    headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
+    records = []
+    for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
+        records.append([a, b, c, d])
+    print '\n', tabulate(records, headers)
+    # tabella top 10 parts of speech
+    headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
+    records = []
+    for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
+        records.append([a, b, c, d])
+    print '\n', tabulate(records, headers)
+    # tabella trigrammi
+    headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
+    records = []
+    for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
+        records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
+    print '\n', tabulate(records, headers)
 
     # probabilità congiunta
+    # Note: da fare!
 
-
-    # # probabilità condizionata
-    # headers = ['corpus', 'bigramma', 'p.condizionata']
-    # records = [
-    #     [m.name, m.bigram_data['condit'][0], m.bigram_data['condit'][1]],
-    #     [f.name, f.bigram_data['condit'][0], f.bigram_data['condit'][1]]
-    #     ]
-    # print '\n', tabulate(records, headers)
+    # probabilità condizionata
+    headers = ['corpus', 'bigramma', 'p.condizionata']
+    records = [
+        [m.name, m.bigram_data['condit'][0], m.bigram_data['condit'][1]],
+        [f.name, f.bigram_data['condit'][0], f.bigram_data['condit'][1]]
+        ]
+    print '\n', tabulate(records, headers)
     
 
 # >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
