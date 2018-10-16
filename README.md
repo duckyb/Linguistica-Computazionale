@@ -51,4 +51,8 @@ perché il progetto sia giudicato idoneo, devono essere consegnati:
 Date di consegna del progetto:
 il progetto deve essere consegnato per posta elettronica a felice.dellorletta@ilc.cnr.it e alessandro.lenci@unipi.it almeno
 una settimana prima dello scritto di ogni appello per poter essere considerato valido per l'appello.
+
 NB: il progetto DEVE essere svolto individualmente.
+
+- [X] test
+- [ ] test
