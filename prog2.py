@@ -103,7 +103,6 @@ def main():
 
     # probabilità congiunta
     # Note: da fare!
-    # test
 
     # probabilità condizionata
     headers = ['corpus', 'bigramma', 'p.condizionata']
