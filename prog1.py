@@ -99,8 +99,8 @@ class Corpus:
 
 def main():
     # istanziazione oggetti
-    m = Corpus('travelblog-m.txt', 'travel blog maschi')
-    f = Corpus('travelblog-f.txt', 'travel blog femmine')
+    m = Corpus('TBM.txt', 'travel blog maschi')
+    f = Corpus('TBF.txt', 'travel blog femmine')
 
     if len(m.tokens) >= len(f.tokens):  # tolgo le ultime 3 cifre del minore
         step = int(len(m.tokens)/1000)
