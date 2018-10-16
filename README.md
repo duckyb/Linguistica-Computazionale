@@ -53,6 +53,3 @@ il progetto deve essere consegnato per posta elettronica a felice.dellorletta@il
 una settimana prima dello scritto di ogni appello per poter essere considerato valido per l'appello.
 
 NB: il progetto DEVE essere svolto individualmente.
-
-- [X] test
-- [ ] test
