@@ -1,3 +1,5 @@
+﻿Output programma
+1
 
 Il confronto avviene su due corpus ( travelblog-m .txt , travelblog-f .txt) i quali contengono: blog scritti da autori di sesso maschile e blog scritti da autori di sesso femminile.
 
