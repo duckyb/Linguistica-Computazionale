@@ -1,0 +1,285 @@
+
+Il confronto avviene su due corpus ( travelblog-m .txt , travelblog-f .txt) i quali contengono: blog scritti da autori di sesso maschile e blog scritti da autori di sesso femminile.
+
+
+
+- I 20 TOKEN PIù FREQUENTI (NO PUNTEGGIATURA) -
+
+travelblog-m 						travelblog-f
+ Token --> the                  Freq --> 282                  Token --> the                  Freq --> 437                 
+ Token --> to                   Freq --> 221                  Token --> to                   Freq --> 276                 
+ Token --> and                  Freq --> 194                  Token --> and                  Freq --> 255                 
+ Token --> a                    Freq --> 188                  Token --> a                    Freq --> 249                 
+ Token --> of                   Freq --> 154                  Token --> of                   Freq --> 212                 
+ Token --> you                  Freq --> 121                  Token --> in                   Freq --> 206                 
+ Token --> in                   Freq --> 117                  Token --> for                  Freq --> 105                 
+ Token --> is                   Freq --> 113                  Token --> with                 Freq --> 97                  
+ Token --> I                    Freq --> 110                  Token --> you                  Freq --> 89                  
+ Token --> that                 Freq --> 79                   Token --> on                   Freq --> 76                  
+ Token --> it                   Freq --> 79                   Token --> is                   Freq --> 73                  
+ Token --> for                  Freq --> 60                   Token --> at                   Freq --> 73                  
+ Token --> your                 Freq --> 57                   Token --> it                   Freq --> 67                  
+ Token --> The                  Freq --> 49                   Token --> I                    Freq --> 58                  
+ Token --> or                   Freq --> 48                   Token --> are                  Freq --> 57                  
+ Token --> be                   Freq --> 46                   Token --> from                 Freq --> 54                  
+ Token --> are                  Freq --> 46                   Token --> as                   Freq --> 52                  
+ Token --> class                Freq --> 44                   Token --> your                 Freq --> 49                  
+ Token --> with                 Freq --> 41                   Token --> that                 Freq --> 42                  
+ Token --> on                   Freq --> 40                   Token --> can                  Freq --> 41                  
+
+
+- I 20 AGGETTIVI PIù FREQUENTI -
+
+travelblog-m 						travelblog-f
+ Token --> middle               Freq --> 27                   Token --> many                 Freq --> 19                  
+ Token --> own                  Freq --> 24                   Token --> more                 Freq --> 18                  
+ Token --> other                Freq --> 24                   Token --> best                 Freq --> 17                  
+ Token --> more                 Freq --> 20                   Token --> few                  Freq --> 15                  
+ Token --> new                  Freq --> 12                   Token --> Armenian             Freq --> 15                  
+ Token --> much                 Freq --> 10                   Token --> you’re             Freq --> 10                  
+ Token --> easy                 Freq --> 10                   Token --> it’s               Freq --> 10                  
+ Token --> good                 Freq --> 9                    Token --> Japanese             Freq --> 10                  
+ Token --> such                 Freq --> 8                    Token --> other                Freq --> 9                   
+ Token --> only                 Freq --> 8                    Token --> unique               Freq --> 8                   
+ Token --> nomadic              Freq --> 7                    Token --> incredible           Freq --> 8                   
+ Token --> most                 Freq --> 7                    Token --> full                 Freq --> 8                   
+ Token --> great                Freq --> 7                    Token --> small                Freq --> 7                   
+ Token --> free                 Freq --> 7                    Token --> popular              Freq --> 7                   
+ Token --> few                  Freq --> 7                    Token --> next                 Freq --> 7                   
+ Token --> rich                 Freq --> 6                    Token --> good                 Freq --> 7                   
+ Token --> possible             Freq --> 6                    Token --> different            Freq --> 7                   
+ Token --> many                 Freq --> 6                    Token --> white                Freq --> 6                   
+ Token --> first                Freq --> 6                    Token --> sure                 Freq --> 6                   
+ Token --> different            Freq --> 6                    Token --> own                  Freq --> 6                   
+
+
+- I 20 VERBI PIù FREQUENTI -
+
+travelblog-m 						travelblog-f
+ Token --> is                   Freq --> 113                  Token --> is                   Freq --> 73                  
+ Token --> be                   Freq --> 46                   Token --> are                  Freq --> 57                  
+ Token --> are                  Freq --> 46                   Token --> was                  Freq --> 36                  
+ Token --> was                  Freq --> 31                   Token --> has                  Freq --> 25                  
+ Token --> have                 Freq --> 23                   Token --> be                   Freq --> 24                  
+ Token --> being                Freq --> 21                   Token --> see                  Freq --> 17                  
+ Token --> get                  Freq --> 19                   Token --> had                  Freq --> 15                  
+ Token --> 's                   Freq --> 18                   Token --> get                  Freq --> 14                  
+ Token --> make                 Freq --> 14                   Token --> find                 Freq --> 14                  
+ Token --> has                  Freq --> 14                   Token --> have                 Freq --> 13                  
+ Token --> been                 Freq --> 14                   Token --> take                 Freq --> 12                  
+ Token --> working              Freq --> 13                   Token --> do                   Freq --> 12                  
+ Token --> do                   Freq --> 13                   Token --> make                 Freq --> 11                  
+ Token --> do                   Freq --> 12                   Token --> visit                Freq --> 10                  
+ Token --> want                 Freq --> 10                   Token --> get                  Freq --> 10                  
+ Token --> making               Freq --> 9                    Token --> been                 Freq --> 9                   
+ Token --> doing                Freq --> 9                    Token --> were                 Freq --> 8                   
+ Token --> think                Freq --> 8                    Token --> have                 Freq --> 8                   
+ Token --> don’t              Freq --> 8                    Token --> comes                Freq --> 8                   
+ Token --> called               Freq --> 8                    Token --> want                 Freq --> 7                   
+
+
+- I 10 POS TAG PIù FREQUENTI -
+
+travelblog-m 						travelblog-f
+ PoS --> NN                   Freq --> 1167                 Token --> NN                   Freq --> 1391                
+ PoS --> IN                   Freq --> 865                  Token --> IN                   Freq --> 1241                
+ PoS --> DT                   Freq --> 740                  Token --> NNP                  Freq --> 1062                
+ PoS --> JJ                   Freq --> 635                  Token --> DT                   Freq --> 943                 
+ PoS --> RB                   Freq --> 442                  Token --> JJ                   Freq --> 812                 
+ PoS --> .                    Freq --> 407                  Token --> NNS                  Freq --> 615                 
+ PoS --> PRP                  Freq --> 399                  Token --> .                    Freq --> 564                 
+ PoS --> NNS                  Freq --> 371                  Token --> ,                    Freq --> 451                 
+ PoS --> NNP                  Freq --> 355                  Token --> VB                   Freq --> 410                 
+ PoS --> VB                   Freq --> 345                  Token --> RB                   Freq --> 388                 
+
+
+- I 10 TRIGRAMMI DI POS TAG PIù FREQUENTI -
+
+travelblog-m 								travelblog-f
+ Trigramma --> DT  - JJ  - NN                   Freq --> 160                   Trigramma --> IN  - DT  - NN                   Freq --> 179                 
+ Trigramma --> IN  - DT  - NN                   Freq --> 116                   Trigramma --> DT  - JJ  - NN                   Freq --> 162                 
+ Trigramma --> DT  - NN  - IN                   Freq --> 83                    Trigramma --> NNP - NNP - NNP                  Freq --> 138                 
+ Trigramma --> NN  - IN  - DT                   Freq --> 74                    Trigramma --> DT  - NN  - IN                   Freq --> 103                 
+ Trigramma --> JJ  - NN  - IN                   Freq --> 71                    Trigramma --> IN  - DT  - JJ                   Freq --> 102                 
+ Trigramma --> IN  - DT  - JJ                   Freq --> 67                    Trigramma --> NN  - IN  - DT                   Freq --> 99                  
+ Trigramma --> VB  - DT  - NN                   Freq --> 45                    Trigramma --> IN  - NNP - NNP                  Freq --> 82                  
+ Trigramma --> JJ  - NN  - .                    Freq --> 42                    Trigramma --> NN  - IN  - NNP                  Freq --> 78                  
+ Trigramma --> DT  - NN  - .                    Freq --> 40                    Trigramma --> JJ  - NN  - IN                   Freq --> 73                  
+ Trigramma --> IN  - PRP - VBP                  Freq --> 38                    Trigramma --> NNS - IN  - DT                   Freq --> 61                  
+
+
+- I 10 BIGRAMMI DI POS TAG CON PROBABILITà CONGIUNTA MASSIMA -
+
+travelblog-m 									travelblog-f
+ Bigramma --> DT  - NN                    P.Congiunta--> 4.11 %                     Bigramma --> IN  - DT                    P.Congiunta --> 3.80 %                   
+ Bigramma --> JJ  - NN                    P.Congiunta--> 3.62 %                     Bigramma --> NNP - NNP                   P.Congiunta --> 3.76 %                   
+ Bigramma --> NN  - IN                    P.Congiunta--> 3.03 %                     Bigramma --> DT  - NN                    P.Congiunta --> 3.72 %                   
+ Bigramma --> IN  - DT                    P.Congiunta--> 2.95 %                     Bigramma --> JJ  - NN                    P.Congiunta --> 3.14 %                   
+ Bigramma --> DT  - JJ                    P.Congiunta--> 2.53 %                     Bigramma --> NN  - IN                    P.Congiunta --> 3.05 %                   
+ Bigramma --> TO  - VB                    P.Congiunta--> 1.73 %                     Bigramma --> DT  - JJ                    P.Congiunta --> 2.44 %                   
+ Bigramma --> NN  - .                     P.Congiunta--> 1.66 %                     Bigramma --> IN  - NNP                   P.Congiunta --> 2.04 %                   
+ Bigramma --> PRP - VBP                   P.Congiunta--> 1.46 %                     Bigramma --> NN  - .                     P.Congiunta --> 1.84 %                   
+ Bigramma --> NN  - ,                     P.Congiunta--> 1.37 %                     Bigramma --> JJ  - NNS                   P.Congiunta --> 1.74 %                   
+ Bigramma --> IN  - PRP                   P.Congiunta--> 1.31 %                     Bigramma --> TO  - VB                    P.Congiunta --> 1.70 %                   
+
+
+- I 10 BIGRAMMI DI POS TAG CON PROBABILITà CONDIZIONATA MASSIMA -
+
+travelblog-m 									travelblog-f
+ Bigramma --> NN  - NN                    P.Condizionata --> 1.94 %                     Bigramma --> NN  - NN                    P.Condizionata  --> 1.73 %                   
+ Bigramma --> NN  - IN                    P.Condizionata --> 1.44 %                     Bigramma --> NN  - IN                    P.Condizionata  --> 1.54 %                   
+ Bigramma --> IN  - NN                    P.Condizionata --> 1.44 %                     Bigramma --> IN  - NN                    P.Condizionata  --> 1.54 %                   
+ Bigramma --> NN  - DT                    P.Condizionata --> 1.23 %                     Bigramma --> IN  - IN                    P.Condizionata  --> 1.38 %                   
+ Bigramma --> DT  - NN                    P.Condizionata --> 1.23 %                     Bigramma --> NNP - NN                    P.Condizionata  --> 1.32 %                   
+ Bigramma --> IN  - IN                    P.Condizionata --> 1.07 %                     Bigramma --> NN  - NNP                   P.Condizionata  --> 1.32 %                   
+ Bigramma --> NN  - JJ                    P.Condizionata --> 1.06 %                     Bigramma --> NNP - IN                    P.Condizionata  --> 1.18 %                   
+ Bigramma --> JJ  - NN                    P.Condizionata --> 1.06 %                     Bigramma --> IN  - NNP                   P.Condizionata  --> 1.18 %                   
+ Bigramma --> IN  - DT                    P.Condizionata --> 0.91 %                     Bigramma --> NN  - DT                    P.Condizionata  --> 1.17 %                   
+ Bigramma --> DT  - IN                    P.Condizionata --> 0.91 %                     Bigramma --> DT  - NN                    P.Condizionata  --> 1.17 %                   
+
+
+- I 2O SOSTANTIVI PIù FREQUENTI, E PER OGNIUNO I SUOI AGGETTIVI ORDINATI IN BASE ALLA LOCAL MUTUAL INFORMATION -
+
+
+IL NUMERO DEI SOSTANTIVI TOTALI é 20 MA NE VERRANO STAMPATI SOLO 18 PERCHè 2 SOSTANTIVI SONO PRESENTI NEI 10 SOSTANTIVI PIù FREQUENTI DI ENTRAMBI I CORPUS. QUESTI SOSTANTIVI SONO:
+- time
+- world
+
+		travelblog-m ------------------------------------------------------ travelblog-f
+
+			---------------------------SOST: city ---------------------------
+ 
+AGG --> cheapest   LMI --> 10.2238293401 				AGG --> largest    LMI --> 8.56156071791
+ 
+AGG --> pleasant   LMI --> 10.2238293401 				AGG --> Japanese   LMI --> 6.10212909927
+
+			---------------------------SOST: life ---------------------------
+ 
+AGG --> incredible LMI --> 8.94372142089 				AGG --> one’s    LMI --> 10.5615607179
+ 
+AGG --> daily      LMI --> 7.94372142089 				AGG --> Armenian   LMI --> 6.6546701223
+
+			---------------------------SOST: money ---------------------------
+ 
+AGG --> asset—time—for LMI --> 8.5717526435 				AGG --> wonderful  LMI --> 8.97659821719
+ 
+AGG --> enough     LMI --> 5.98679014278 				AGG --> entire     LMI --> 7.39163571647
+ 
+AGG --> such       LMI --> 5.40182764206 				AGG --> whole      LMI --> 6.39163571647
+
+			---------------------------SOST: business ---------------------------
+ 
+AGG --> main       LMI --> 7.7832567487 				AGG --> Japanese   LMI --> 6.90948402133
+ 
+AGG --> independent LMI --> 6.7832567487 				AGG --> more       LMI --> 5.66847592183
+
+			---------------------------SOST: people ---------------------------
+ 
+AGG --> insane     LMI --> 7.27629675998 				AGG --> land-locked LMI --> 10.0469875451
+ 
+AGG --> happy      LMI --> 7.27629675998 				AGG --> first      LMI --> 7.46202504436
+
+			---------------------------SOST: trip ---------------------------
+ 
+AGG --> first      LMI --> 10.4462217614 				AGG --> yoga       LMI --> 10.7839531392
+
+			---------------------------SOST: country ---------------------------
+ 
+AGG --> polarizing LMI --> 8.330744544 				AGG --> nation’s LMI --> 10.7839531392
+
+			---------------------------SOST: time ---------------------------
+ 
+AGG --> precious   LMI --> 7.8612592607 				AGG --> lazy       LMI --> 9.66847592183
+ 
+AGG --> biggest    LMI --> 7.8612592607 				AGG --> few        LMI --> 5.76158532622
+
+			---------------------------SOST: days ---------------------------
+ 
+AGG --> Most       LMI --> 10.2238293401 				AGG --> weekday    LMI --> 8.46202504436
+ 
+AGG --> few        LMI --> 7.41647441803 				AGG --> first      LMI --> 6.87706254364
+
+			---------------------------SOST: class ---------------------------
+ 
+AGG --> labor-providing LMI --> 7.5717526435 				AGG --> awesome    LMI --> 9.19899063852
+ 
+AGG --> capital-rich LMI --> 7.5717526435 				AGG --> inexpensive LMI --> 9.19899063852
+ 
+AGG --> capital-owned LMI --> 7.5717526435 				AGG --> spooky     LMI --> 9.19899063852
+ 
+AGG --> capitalistic LMI --> 6.5717526435 				AGG --> kid-friendly LMI --> 7.19899063852
+ 
+AGG --> new        LMI --> 3.98679014278 				AGG --> beautiful  LMI --> 6.39163571647
+ 
+AGG --> only       LMI --> 3.48428980225 				AGG --> good       LMI --> 6.39163571647
+ 
+AGG --> middle     LMI --> 2.6648620479 				AGG --> popular    LMI --> 6.39163571647
+
+			---------------------------SOST: job ---------------------------
+ 
+AGG --> primary    LMI --> 8.7832567487 				AGG --> platonic   LMI --> 9.56156071791
+ 
+AGG --> one’s    LMI --> 8.7832567487 				AGG --> great      LMI --> 7.23963262302
+ 
+AGG --> normal     LMI --> 6.7832567487 				AGG --> fun        LMI --> 6.97659821719
+ 
+AGG --> real       LMI --> 6.7832567487 				AGG --> unique     LMI --> 6.56156071791
+
+			---------------------------SOST: place ---------------------------
+ 
+AGG --> special    LMI --> 7.98679014278 				AGG --> same       LMI --> 8.12098812652
+ 
+AGG --> fantastic  LMI --> 7.98679014278 				AGG --> hard       LMI --> 8.12098812652
+ 
+AGG --> hard       LMI --> 7.5717526435 				AGG --> perfect    LMI --> 7.12098812652
+ 
+AGG --> awesome    LMI --> 7.5717526435 				AGG --> wait       LMI --> 6.5360256258
+ 
+AGG --> nice       LMI --> 7.5717526435 				AGG --> next       LMI --> 5.95106312508
+
+			---------------------------SOST: way ---------------------------
+ 
+AGG --> efficient  LMI --> 8.70925616725 				AGG --> whichever  LMI --> 9.56156071791
+ 
+AGG --> best       LMI --> 7.38732807237 				AGG --> diverse    LMI --> 9.56156071791
+
+			---------------------------SOST: capital ---------------------------
+ 
+AGG --> “old”  LMI --> 8.44622176142 				AGG --> brash      LMI --> 9.56156071791
+ 
+AGG --> old        LMI --> 8.44622176142 				AGG --> boldest    LMI --> 9.56156071791
+ 
+AGG --> invisible  LMI --> 7.44622176142 				AGG --> vibrant    LMI --> 8.56156071791
+ 
+AGG --> political  LMI --> 7.44622176142 				AGG --> good       LMI --> 6.75420579585
+
+			---------------------------SOST: world ---------------------------
+ 
+AGG --> borderless LMI --> 6.31693874447 				AGG --> 1-2        LMI --> 8.97659821719
+ 
+AGG --> new        LMI --> 4.31693874447 				AGG --> 3-4        LMI --> 7.97659821719
+
+
+- I 20 NOMI PROPRI DI LUOGO PIù FREQUENTI -
+
+travelblog-m : 				travelblog-f :
+ Thailand            Freq --> 16                    Armenia             Freq --> 22                  
+ America             Freq --> 14                    Tokyo               Freq --> 20                  
+ India               Freq --> 11                    Japan               Freq --> 15                  
+ American            Freq --> 6                     Armenian            Freq --> 14                  
+ Russia              Freq --> 6                     Japanese            Freq --> 10                  
+ Bali                Freq --> 3                     Sharm               Freq --> 7                   
+ Bangkok             Freq --> 3                     Nicaragua           Freq --> 7                   
+ Indonesia           Freq --> 3                     Egypt               Freq --> 5                   
+ Brazilian           Freq --> 3                     Yerevan             Freq --> 3                   
+ Eastern Europe      Freq --> 2                     Costa Rica          Freq --> 3                   
+ England             Freq --> 2                     Mexico              Freq --> 3                   
+ Australia           Freq --> 1                     Shinjuku            Freq --> 3                   
+ Europe              Freq --> 1                     Sinai               Freq --> 3                   
+ China               Freq --> 1                     Europe              Freq --> 2                   
+ US                  Freq --> 1                     Egyptian            Freq --> 2                   
+ California          Freq --> 1                     Russian             Freq --> 2                   
+ Russian             Freq --> 1                     Thailand            Freq --> 2                   
+ Chiang Mai          Freq --> 1                     English             Freq --> 2                   
+ Blogging            Freq --> 1                     Cairo               Freq --> 2                   
+ Tikal               Freq --> 1                     Akihabara           Freq --> 2                   
