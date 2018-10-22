@@ -119,5 +119,3 @@ files = ['TBM.txt', 'TBF.txt']
 m = Corpus(files[0], 'travel blog maschi')
 f = Corpus(files[1], 'travel blog femmine')
 main()
-
-#test
