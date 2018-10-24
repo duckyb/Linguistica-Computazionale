@@ -4,12 +4,13 @@ import sys, codecs, nltk, re, math
 from nltk import FreqDist, bigrams, trigrams
 from tabulate import tabulate # libreria per output tabulari
 
-class Corpus:
+class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le dovute analisi
     def __init__ (self, path, name):
-        self.path = path
-        self.name = name
-        self.pos_tag = []
-        self.tokens = self.tokenized_text()
+        self.path = path # percorso del file
+        self.name = name # nome del corpus
+        self.pos_tag = [] # [ (part of speech, token) ]
+        # self.pos_set = set([p for t, p in self.pos_tag])
+        self.tokens = self.tokenized_text() # lista dei token
         self.top20 = {
             'noPunct': self.top20_no_punct(),
             'adj': self.top20_partsofspeech('JJ'),
@@ -19,12 +20,12 @@ class Corpus:
         self.top10trigrams = FreqDist(trigrams([b for (a, b) in self.pos_tag])).most_common(10)
         self.bigram_data = {
             'bigrams': list(bigrams(self.tokens)),
-            'unique': None,
-            'condit' : None,
-            'joined' : None
+            'unique': None, # lista di bigrammi senza duplicati
+            'condit' : [], # probabilità condizionata
+            'joined' : [] # probabilità congiunta
         }
         self.bigram_data['unique'] = set(self.bigram_data['bigrams'])
-        self.bigram_data['condit'] = self.bigram_prob_condit()
+        self.bigram_prob() # inizializza self.bigram_data['condit'] & self.bigram_data['joined']
 
     def tokenized_text(self): # tokenizza il testo
         corpora = codecs.open(self.path, "r", "utf-8")
@@ -32,7 +33,6 @@ class Corpus:
         phrases = sent_tokenizer.tokenize(raw.lower())
         tokenList = []
         for p in phrases:
-            # tokens = nltk.word_tokenize(p.encode('utf8'))
             tokens = nltk.word_tokenize(p)
             tokenList += tokens
         corpora.close()
@@ -55,63 +55,75 @@ class Corpus:
         tuples = FreqDist(self.pos_tag).most_common()
         return nltk.FreqDist([b for (a, b), c in tuples]).most_common(10)
 
-    def bigram_joined_prob(self):
-        return
+    def getKey(self, e): # funzione di appoggio per ordinare in base al secondo elemento (la frequenza)
+        return e[1]
 
-    def bigram_prob_condit(self):
-        max_found = 0.0
-        for big in self.bigram_data['unique']:
-            bigram_freq = self.bigram_data['bigrams'].count(big)
-            item1_freq = self.tokens.count(big[0])
-            current_prob = bigram_freq*1.0 / item1_freq*1.0
-            if current_prob > max_found:
-                max_found = current_prob
-                big_max = big
-        return [big_max, max_found]
+    def bigram_prob(self):
+        # C O N D I T I O N A L
+        for bigram in self.bigram_data['unique']:
+            bigram_freq = self.bigram_data['bigrams'].count(bigram) # quante volte occorre un bigramma
+            item1_freq = self.tokens.count(bigram[0]) # quante volte occorre il primo elemento
+            prob_condit = bigram_freq*1.0 / item1_freq*1.0 # probabilità condizionata
+            self.bigram_data['condit'].append([bigram, prob_condit]) # conservo ogni probabilità
+        self.bigram_data['condit'].sort(key=self.getKey, reverse=True) # ordinamento decrescente
+        self.bigram_data['condit'] = self.bigram_data['condit'][:10] # stacco le 10 più frequenti
+        # J O I N E D
+        pos_bigrams = list(bigrams([p for t, p in self.pos_tag]))
+        pos_bigrams_fdist = nltk.FreqDist(pos_bigrams)
+        pos_bigrams_set = set(pos_bigrams)
+        for b in pos_bigrams_set:
+            prob_joined = pos_bigrams_fdist[b]*1.0/len(self.tokens)*1.0
+            self.bigram_data['joined'].append([b, prob_joined])
+        self.bigram_data['joined'].sort(key=self.getKey, reverse=True)
+        self.bigram_data['joined'] = self.bigram_data['joined'][:10]
 
 def main():
-    # tabella senza punteggiatura
-    headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
-    records = []
-    for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
-        records.append([a, b, c, d])
-    print '\n', tabulate(records, headers)
-    # tabella aggettivi
-    headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
-    records = []
-    for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
-        records.append([a, b, c, d])
-    print '\n', tabulate(records, headers)
-    # tabella verbi
-    headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
-    records = []
-    for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
-        records.append([a, b, c, d])
-    print '\n', tabulate(records, headers)
-    # tabella top 10 parts of speech
-    headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
-    records = []
-    for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
-        records.append([a, b, c, d])
-    print '\n', tabulate(records, headers)
-    # tabella trigrammi
-    headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
-    records = []
-    for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
-        records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
-    print '\n', tabulate(records, headers)
+    # # tabella senza punteggiatura
+    # headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
+    # records = []
+    # for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
+    #     records.append([a, b, c, d])
+    # print '\n', tabulate(records, headers)
+    # # tabella aggettivi
+    # headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
+    # records = []
+    # for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
+    #     records.append([a, b, c, d])
+    # print '\n', tabulate(records, headers)
+    # # tabella verbi
+    # headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
+    # records = []
+    # for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
+    #     records.append([a, b, c, d])
+    # print '\n', tabulate(records, headers)
+    # # tabella top 10 parts of speech
+    # headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
+    # records = []
+    # for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
+    #     records.append([a, b, c, d])
+    # print '\n', tabulate(records, headers)
+    # # tabella trigrammi
+    # headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
+    # records = []
+    # for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
+    #     records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
+    # print '\n', tabulate(records, headers)
 
     # probabilità congiunta
-    # Note: da fare!
-
-    # probabilità condizionata
-    headers = ['corpus', 'bigramma', 'p.condizionata']
-    records = [
-        [m.name, m.bigram_data['condit'][0], m.bigram_data['condit'][1]],
-        [f.name, f.bigram_data['condit'][0], f.bigram_data['condit'][1]]
-        ]
+    headers = ['MASCHI\nbigrammi', 'prob.\ncongiunta', 'FEMMINE\nbigrammi', 'prob.\ncongiunta']
+    records = []
+    for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
+        records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
     print '\n', tabulate(records, headers)
-    
+    # NOTA: SISTEMARE OUTPUT
+
+    # # probabilità condizionata
+    # headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
+    # records = []
+    # for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
+    #     records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
+    # print '\n', tabulate(records, headers)
+    return
 
 # >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
