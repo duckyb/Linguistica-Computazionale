@@ -27,7 +27,8 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         self.bigram_data['unique'] = set(self.bigram_data['bigrams'])
         self.bigram_prob() # inizializza self.bigram_data['condit'] & self.bigram_data['joined']
 
-    def tokenized_text(self): # tokenizza il testo
+    def tokenized_text(self):
+        # T O K E N I Z Z A
         corpora = codecs.open(self.path, "r", "utf-8")
         raw = corpora.read()
         phrases = sent_tokenizer.tokenize(raw.lower())
@@ -55,7 +56,8 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         tuples = FreqDist(self.pos_tag).most_common()
         return nltk.FreqDist([b for (a, b), c in tuples]).most_common(10)
 
-    def getKey(self, e): # funzione di appoggio per ordinare in base al secondo elemento (la frequenza)
+    def getKey(self, e):
+        # funzione di appoggio per ordinare in base al secondo elemento (la frequenza)
         return e[1]
 
     def bigram_prob(self):
@@ -78,51 +80,66 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         self.bigram_data['joined'] = self.bigram_data['joined'][:10]
 
 def main():
-    # # tabella senza punteggiatura
-    # headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella aggettivi
-    # headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella verbi
-    # headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella top 10 parts of speech
-    # headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
-    # records = []
-    # for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
-    #     records.append([a, b, c, d])
-    # print '\n', tabulate(records, headers)
-    # # tabella trigrammi
-    # headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
-    # records = []
-    # for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
-    #     records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
-    # print '\n', tabulate(records, headers)
+    #  M E N U - S E L E Z I O N E
+    choice = input('Premi:\n\
+    1 per top 20 token punteggiatura esclusa\n\
+    2 per top 20 aggettivi\n\
+    3 per top 20 verbi\n\
+    4 per top 10 PoS\n\
+    5 per top 10 trigrammi\n\
+    6 per probabilità congiunta\n\
+    7 per probabilità condizionata\n\
+    0 per uscire\n')
 
-    # probabilità congiunta
-    headers = ['MASCHI\nbigrammi', 'prob.\ncongiunta', 'FEMMINE\nbigrammi', 'prob.\ncongiunta']
-    records = []
-    for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
-        records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
-    print '\n', tabulate(records, headers)
-    # NOTA: SISTEMARE OUTPUT
-
-    # # probabilità condizionata
-    # headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
-    # records = []
-    # for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
-    #     records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
-    # print '\n', tabulate(records, headers)
+    while choice != 0:
+        if choice == 1: # tabella senza punteggiatura
+            headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
+            records = []
+            for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
+                records.append([a, b, c, d])
+            print '\n', tabulate(records, headers)
+        elif choice == 2: # tabella aggettivi
+            headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
+            records = []
+            for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
+                records.append([a, b, c, d])
+            print '\n', tabulate(records, headers)
+        elif choice == 3: # tabella verbi
+            headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
+            records = []
+            for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
+                records.append([a, b, c, d])
+            print '\n', tabulate(records, headers)
+        elif choice == 4: # tabella top 10 parts of speech
+            headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
+            records = []
+            for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
+                records.append([a, b, c, d])
+            print '\n', tabulate(records, headers)
+        elif choice == 5: # tabella trigrammi
+            headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
+            records = []
+            for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
+                records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
+            print '\n', tabulate(records, headers)
+        elif choice == 6: # probabilità congiunta
+            headers = ['MASCHI\nbigrammi', 'prob.\ncongiunta', 'FEMMINE\nbigrammi', 'prob.\ncongiunta']
+            records = []
+            for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
+                records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
+            print '\n', tabulate(records, headers)
+            # NOTA: SISTEMARE OUTPUT
+        elif choice == 7: # probabilità condizionata
+            headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
+            records = []
+            for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
+                records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
+            print '\n', tabulate(records, headers)
+        elif choice == 8: # sostantivi più frequenti
+            pass # ! da fare
+        elif choice == 9: # 20 nomi propri di luogo più frequenti
+            pass # ! da fare
+        choice = input('\nScegli un opzione (0 per uscire): ')
     return
 
 # >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
