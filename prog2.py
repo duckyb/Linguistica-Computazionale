@@ -155,6 +155,7 @@ def main():
                 'bigrams': [], # bigrammi combinati
                 'fdistBI': [], # fdist bigrammi combinati
                 'unique' : [], # bigrammi senza duplicati
+                'small'  : [], # lista contenente solo i bigrammi che mi interessano
             }
             comb['tokens'] = m.tokens
             comb['tokens'].extend(f.tokens)
@@ -170,22 +171,29 @@ def main():
             comb['fdist_JJ'] = nltk.FreqDist(comb['adj'])
             comb['bigrams'] = m.bigram_data['bigrams']
             comb['bigrams'].extend(f.bigram_data['bigrams'])
-            comb['fdistBI'] = nltk.FreqDist(comb['bigrams'])
             comb['unique'] = set(comb['bigrams'])
-            smaller_bigr_set = [i for i in comb['unique'] if (i[1] in comb['nouns']) and (i[0] in comb['adj'])]
-            result = []
-            for n in comb['top20NN']: # per ogni sost
-                result.append([n])
-                JJeLMI_Tuples = []
-                for b in smaller_bigr_set: # per ogni bigramma
-                    if b[1] == n[0]: # quando il bigramma contiene il sost
-                        LMI = 0
-                        mynoun_freq = next(freq for noun, freq in comb['top20NN'] if noun == b[1])
-                        LMI=(float(mynoun_freq)*log2((float(mynoun_freq)/float(len(comb['tokens'])))/(float(comb['fdist_JJ'][b[0]])/float(len(comb['tokens']))*(float(n[1])/float(len(comb['tokens']))))))
-                        JJeLMI_Tuples.append(((b[0], LMI)))
-                JJeLMI_Tuples.sort(key=getKey, reverse=True)
-                result.append(JJeLMI_Tuples)
-            print result
+            comb['small'] = [i for i in comb['unique'] if (i[1] in comb['nouns']) and (i[0] in comb['adj'])]
+            comb['fdistBI'] = nltk.FreqDist(comb['small'])
+            headers = ['aggettivo', 'local mutual\ninformation']
+            for n in comb['nouns']: # per ogni sostantivo da analizzare
+                LMI = 0.0
+                records = [] # pulisco la tabella
+                JJeLMI_Tuples = [] # azzero le tuple
+                for b in comb['small']: # per ogni bigramma
+                    if b[1] in comb['nouns']: # se il sostantivo è quello che cerco
+                        pass
+                        # freq_NN = comb['tokens'].count(b[1])
+                        # freq_JJ = comb['tokens'].count(b[0])
+                        # freq_observed = comb['fdistBI'][b]
+                        # freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(comb['tokens'])*1.0)
+                        # LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
+            print((b[1], (b[0], int(LMI)))) # genero una tupla JJ + LMI
+                # JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
+                # for e1, e2 in JJeLMI_Tuples:
+                #     records.append([e1, e2])
+                # print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
+                # print tabulate(records, headers, floatfmt=".2f"), '\n'
+                
 
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
@@ -200,5 +208,14 @@ m = Corpus(files[0], 'travel blog maschi')
 f = Corpus(files[1], 'travel blog femmine')
 main()
 
-# [[(u'i', 64)], [(u'else', 836.5950414261893)], [(u'class', 48)], [(u'capital-rich', 627.4462810696419), (u'labor-providing', 627.4462810696419), (u'crossfit', 627.4462810696419), (u'capital-owned', 627.4462810696419), (u'capitalistic', 579.4462810696419), (u'only', 483.4462810696418), (u'new', 449.82517459886947), (u'middle', 389.64485817107186)], [(u'world', 42)], [(u'borderless', 507.0154959359367), (u'new', 393.5970277740108)], [(u'capital', 30)], [(u'invisible', 362.1539256685262), (u'political', 362.1539256685262), (u'old', 362.1539256685262), (u'nomad', 344.60505064689147), (u'big', 332.1539256685262), (u'new', 281.14073412429343), (u'own', 254.60505064689153)], [(u'people', 28)], [(u'insane', 366.01033062395777), (u'regular', 366.01033062395777), (u'happy', 338.01033062395777), (u'most', 282.01033062395777), (u'many', 277.2524305835731), (u'much', 272.9963439671116), (u'more', 244.9963439671116), (u'other', 237.63138060376542)], [(u'country', 26)], [(u'regular', 339.8667355793894), (u'polarizing',
-# 339.8667355793894), (u'amazing', 313.8667355793894), (u'anglo-saxon', 313.8667355793894), (u'western', 313.8667355793894), (u'exotic', 272.6577105606393), (u'first', 272.6577105606393), (u'only', 261.86673557938934), (u'other', 220.65771056063932)], [(u'money', 22)], [(u'asset\u2014time\u2014for', 287.57954549025254), (u'enough', 265.57954549025254), (u'such', 217.8411954585217)], [(u'job', 20)], [(u'primary', 261.43595044568417), (u'real', 221.43595044568414), (u'normal', 221.43595044568414), (u'9-5', 214.99738854793688), (u'comfortable', 209.73670043126103)], [(u'america', 19)], [(u'latin', 210.36415292339993)], [(u'business', 19)], [(u'online', 229.36415292339993), (u'main', 229.36415292339993), (u'independent', 210.36415292339993), (u'actual', 210.36415292339993), (u'new', 178.05579827871918), (u'own', 161.24986540969797)]]
+# [[(u'i', 106)], [(u'overall', 1510.0049659582799), (u'armenia', 1510.0049659582799),
+# (u'travel', 1510.0049659582799), (u'else', 1404.0049659582799), (u'\u2014', 1341.9989408818374)], [(u'world', 62)], [(u'whichever', 883.2104517869184), (u'diverse', 821.2104517869184), (u'borderless', 821.2104517869184), (u'small', 668.725691431406), (u'different', 647.1544466193469), (u'new', 610.8867715746353)], [(u'class', 52)], [(u'yoga', 740.7571531116089), (u'capital-rich', 740.7571531116089), (u'labor-providing', 740.7571531116089), (u'crossfit', 740.7571531116089), (u'capital-owned', 740.7571531116089), (u'capitalistic', 688.7571531116089), (u'\u2018', 658.339103074109), (u'only', 560.8667089424696), (u'new', 512.3566471271134), (u'middle', 480.75715311160894)], [(u'country', 37)], [(u'land-locked', 527.0772050986449), (u'polarizing', 527.0772050986449), (u'regular', 490.0772050986448), (u'anglo-saxon', 490.0772050986448), (u'western', 468.4335925719621), (u'amazing', 453.0772050986448), (u'exotic', 423.2050729825135), (u'only', 399.07823520906487), (u'first', 390.1609355274244), (u'other', 340.4346226823821)], [(u'people', 37)], [(u'insane', 527.0772050986449), (u'regular', 490.0772050986448), (u'happy', 441.1658655878125), (u'japanese', 404.16586558781245), (u'most', 390.1609355274244), (u'much', 382.5222530611297), (u'many', 349.2050729825135), (u'other', 340.4346226823821), (u'more', 332.90388710123216)], [(u'time', 37)], [(u'wait', 527.0772050986449), (u'precious', 490.0772050986448), (u'biggest', 468.4335925719621), (u'same', 468.4335925719621), (u'perfect', 441.1658655878125), (u'hard', 441.1658655878125), (u'next', 404.16586558781245), (u'first', 390.1609355274244), (u'much', 382.5222530611297)], [(u'capital', 36)], [(u'invisible', 476.8318752311139), (u'political', 476.8318752311139), (u'nomad', 455.77322520515236), (u'big', 393.2424638151689), (u'old', 375.76709803704017), (u'new', 354.70844801107853), (u'own', 336.18381378920725)], [(u'things', 30)], [(u'do', 427.35989602592826), (u'certain', 427.35989602592826), (u'sell', 427.35989602592826), (u'useless', 397.35989602592826), (u'stupid', 379.8110210042936), (u'amazing', 367.35989602592826), (u'top', 367.35989602592826), (u'weird', 357.7020531793074), (u'only', 323.5769474668093), (u'great', 313.1392483642001), (u'few', 293.5769474668093), (u'best', 286.3467044816955)], [(u'place', 28)], [(u'inexpensive', 398.86923629086635), (u'spooky', 398.86923629086635), (u'kid-friendly', 370.86923629086635), (u'special', 354.490286270674), (u'fantastic', 354.490286270674), (u'nice', 354.490286270674), (u'hard', 333.85524963402025), (u'awesome', 333.85524963402025), (u'popular', 314.86923629086635), (u'beautiful', 310.11133625048166), (u'good', 286.86923629086635)], [(u'tokyo', 27)], [(u'cafes', 384.6239064233354),
+# (u'downtown', 384.6239064233354), (u'lockup', 384.6239064233354), (u'central', 321.9318478613767)], [(u'family', 27)], [(u'rica', 384.6239064233354), (u'wonderful', 384.6239064233354), (u'entire', 330.6239064233354), (u'nicaragua', 330.6239064233354), (u'whole', 330.6239064233354)], [(u'way', 26)], [(u'fun', 370.37857655580444), (u'milky', 370.37857655580444), (u'bedouin', 370.37857655580444), (u'platonic', 370.37857655580444), (u'efficient', 344.37857655580444), (u'american', 297.3873485823068), (u'unique', 287.9605265183044), (u'great', 271.3873485823068), (u'different', 271.3873485823068), (u'best', 248.16714388413612)], [(u'day', 26)], [(u'freaking', 370.37857655580444), (u'1-2', 370.37857655580444), (u'3-4', 370.37857655580444), (u'clear', 329.1695515370545), (u'nice', 329.1695515370545), (u'popular', 292.37857655580444), (u'next', 284.0084460887331), (u'other', 239.2243294524847)], [(u'life', 25)], [(u'daily', 331.1332466882735), (u'real', 285.94937363683346), (u'incredible', 276.8851216522158), (u'armenian', 258.4609817980606), (u'good', 256.1332466882735)], [(u'city', 23)], [(u'mexico', 327.64258695321166), (u'pleasant', 327.64258695321166), (u'cheapest', 327.64258695321166), (u'largest', 304.64258695321166), (u'western', 291.1884494366251), (u'japanese', 251.23824077080232), (u'different', 240.07342374588677)], [(u'money', 23)],
+# [(u'asset\u2014time\u2014for', 327.64258695321166), (u'enough', 304.64258695321166),
+# (u'such', 251.23824077080232)], [(u'america', 22)], [(u'latin', 269.39725708568074),
+# (u'central', 262.3148389981588)], [(u'japan', 21)], [], [(u'years', 21)], [(u'ten', 299.15192721814975), (u'recent', 299.15192721814975), (u'light', 278.15192721814975),
+# (u'few', 205.50386322676655), (u'many', 198.19747385494009)],
+
+
+# [(u'days', 20)], 
+# [(u'lazy', 233.20734733619574), (u'most', 210.89780298779698), (u'few', 195.7179649778729), (u'other', 184.01871496344978)]]
