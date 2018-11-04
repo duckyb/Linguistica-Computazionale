@@ -194,6 +194,8 @@ def main():
                 # print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
                 # print tabulate(records, headers, floatfmt=".2f"), '\n'
                 
+                # NOTA: da capire perché vengono stampate in output tutti gli aggettivi per ogni
+                # nome invece di stampare solo gli aggettivi accoppiati
 
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
