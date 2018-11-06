@@ -142,55 +142,8 @@ def main():
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers)
-        elif choice == 8: # sostantivi più frequenti combinati
-            comb = { # combino elementi di m ed f
-                'tokens' : [], # token combinati
-                'tags'   : [], # pos_tag combinati
-                'top20NN': [], # (sost, freq) combinati
-                'nouns'  : [], # sost combinati
-                'adj'    : [], # aggettivi combinati
-                'fdistJJ': [], # fdist aggettivi combinati
-                'bigrams': [], # bigrammi combinati
-                'fdistBI': [], # fdist bigrammi combinati
-                'unique' : [], # bigrammi senza duplicati
-                'small'  : [], # lista contenente solo i bigrammi che mi interessano
-            }
-            comb['tokens'] = m.tokens
-            comb['tokens'].extend(f.tokens)
-            comb['tags'] = m.pos_tag
-            comb['tags'].extend(f.pos_tag) 
-            NN_list = []
-            for token, tag in comb['tags']:
-                if tag.startswith('NN'):
-                    NN_list.append(token)
-            comb['top20NN'] = FreqDist(NN_list).most_common(20)
-            comb['nouns'] = [n for n, fre in comb['top20NN']]
-            comb['adj'] = [token for token, tag in comb['tags'] if tag.startswith('JJ')]
-            comb['fdist_JJ'] = nltk.FreqDist(comb['adj'])
-            comb['bigrams'] = m.bigram_data['bigrams']
-            comb['bigrams'].extend(f.bigram_data['bigrams'])
-            comb['unique'] = set(comb['bigrams'])
-            comb['small'] = [i for i in comb['unique'] if (i[1] in comb['nouns']) and (i[0] in comb['adj'])]
-            comb['fdistBI'] = nltk.FreqDist(comb['small'])
-            headers = ['aggettivo', 'local mutual\ninformation']
-            for n in comb['top20NN']: # per ogni sostantivo da analizzare
-                LMI = 0.0
-                records = [] # pulisco la tabella
-                JJeLMI_Tuples = [] # azzero le tuple
-                for b in comb['small']: # per ogni bigramma
-                    if b[1]==n[0] and b[0] in comb['adj']: # se il sostantivo è quello che cerco
-                        freq_NN = comb['tokens'].count(b[1])
-                        freq_JJ = comb['tokens'].count(b[0])
-                        freq_observed = comb['fdistBI'][b]
-                        freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(comb['tokens'])*1.0)
-                        LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
-                        JJeLMI_Tuples.append((b[0], LMI)) # genero una tupla JJ + LMI
-                JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
-                for e1, e2 in JJeLMI_Tuples:
-                    records.append([e1, e2])
-                print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
-                print tabulate(records, headers, floatfmt=".2f"), '\n'
-
+        elif choice == 8: # sostantivi più frequenti
+            pass # in fase di sviluppo su un nuovo ramo Git
         elif choice == 9: # 20 nomi propri di luogo più frequenti
             pass # ! da fare
         choice = 0 # uscita automatica
