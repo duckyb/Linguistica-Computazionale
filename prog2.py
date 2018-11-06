@@ -180,15 +180,14 @@ def main():
                 records = [] # pulisco la tabella
                 JJeLMI_Tuples = [] # azzero le tuple
                 for b in comb['small']: # per ogni bigramma
-                    if b[1] in comb['nouns']: # se il sostantivo è quello che cerco
-                        pass
-                        # freq_NN = comb['tokens'].count(b[1])
-                        # freq_JJ = comb['tokens'].count(b[0])
-                        # freq_observed = comb['fdistBI'][b]
-                        # freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(comb['tokens'])*1.0)
-                        # LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
-            print((b[1], (b[0], int(LMI)))) # genero una tupla JJ + LMI
-                # JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
+                    if ((b[1]==n) and (b[0] in comb['adj'])): # se il sostantivo è quello che cerco
+                        freq_NN = comb['tokens'].count(b[1])
+                        freq_JJ = comb['tokens'].count(b[0])
+                        freq_observed = comb['fdistBI'][b]
+                        freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(comb['tokens'])*1.0)
+                        LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
+            JJeLMI_Tuples.append((b[1], (b[0], int(LMI)))) # genero una tupla JJ + LMI
+                JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
                 # for e1, e2 in JJeLMI_Tuples:
                 #     records.append([e1, e2])
                 # print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
