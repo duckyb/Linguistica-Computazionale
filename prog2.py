@@ -142,7 +142,7 @@ def main():
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers)
         elif choice == 8: # sostantivi più frequenti
-            pass
+            pass # in fase di sviluppo su un nuovo ramo Git
         elif choice == 9: # 20 nomi propri di luogo più frequenti
             pass # ! da fare
         choice = input('\nScegli un opzione (0 per uscire): ')
