@@ -85,18 +85,19 @@ def log2(x): # per calcolare log in base 2
     return math.log(x)/math.log(2)
 
 def main():
-     M E N U - S E L E Z I O N E
-    choice = input('Premi:\n\
-    1 per top 20 token punteggiatura esclusa\n\
-    2 per top 20 aggettivi\n\
-    3 per top 20 verbi\n\
-    4 per top 10 PoS\n\
-    5 per top 10 trigrammi\n\
-    6 per probabilità congiunta\n\
-    7 per probabilità condizionata\n\
-    8 per top 10 sostantivi + agg.\n\
-    9 TBD\n\
-    0 per uscire\n')
+    #  M E N U - S E L E Z I O N E
+    # choice = input('Premi:\n\
+    # 1 per top 20 token punteggiatura esclusa\n\
+    # 2 per top 20 aggettivi\n\
+    # 3 per top 20 verbi\n\
+    # 4 per top 10 PoS\n\
+    # 5 per top 10 trigrammi\n\
+    # 6 per probabilità congiunta\n\
+    # 7 per probabilità condizionata\n\
+    # 8 per top 10 sostantivi + agg.\n\
+    # 9 TBD\n\
+    # 0 per uscire\n')
+    choice = 9
 
     while choice != 0:
         if choice == 1: # tabella senza punteggiatura
