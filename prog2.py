@@ -80,15 +80,17 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         # N A M E D - E N T I T Y
         names = []
         tree = nltk.ne_chunk(self.pos_tag)
-        IOBformat = nltk.tree2conllstr(tree)
         for branch in tree:
+            print branch
             NE = ''
             if hasattr(branch, 'label'):
-                if nodo.label in ['PERSON', 'GPE', 'ORGANIZATION']:
-                    for partNE in nodo.leaves():
-                        NE = NE + ' ' + partNE[0]
-                    names.append(NE)
-        return names
+                print('ha label')
+                if branch.label() in ['GPE']:
+                    print('ha gpe')
+                    for leaf in branch.leaves():
+                        NE = NE + ' ' + leaf[0]
+                        names.append(NE)
+        return True
 
 # S U P P O R T O
 
@@ -207,7 +209,7 @@ def main():
                 print tabulate(records, headers, floatfmt=".2f"), '\n'
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
-            print f.namentity()
+            print m.namentity()
         choice = 0 # uscita automatica
     return
 
