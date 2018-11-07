@@ -8,9 +8,9 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
     def __init__ (self, path, name):
         self.path = path # percorso del file
         self.name = name # nome del corpus
-        with codecs.open(self.path, "r", "utf-8") as sent:
-            self.raw = sent.read()
-        self.pos_tag = [] # [ (part_of_speech, token) ]
+        with codecs.open(self.path, 'r', 'utf-8') as doc: # apro il documento
+            self.raw = doc.read() # assegno a raw il mio testo
+        self.pos_tag = [] # [ (part_of_speech, token), (...) ]
         self.tokens = self.tokenized_text() # lista dei token
         self.top20 = {
             'noPunct': self.top20_no_punct(),
@@ -41,7 +41,7 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         return tokenList
 
     def top20_no_punct(self):
-        punct = re.compile(r'[^\w]') # lista di tutti i segni di punteggiatura
+        punct = re.compile(r'[^\w]') # punctuations
         tokenlist_noPunct = [i for i in self.tokens if not punct.match(i)]
         return FreqDist(tokenlist_noPunct).most_common(20)
 
@@ -86,72 +86,62 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
                     for leaf in branch.leaves():
                         NE = NE + ' ' + leaf[0]
                         names.append(NE)
-        return nltk.FreqDist(names).most_common(20)
+        return FreqDist(names).most_common(20)
 
 # S U P P O R T O
 
 def getKey(e): # per ordinare in base al secondo elemento di coppie
     return e[1]
-    
-def log2(x): # per calcolare log in base 2
-    return math.log(x)/math.log(2)
 
 def main():
     #  M E N U - S E L E Z I O N E
-    # choice = input('Premi:\n\
-    # 1 per top 20 token punteggiatura esclusa\n\
-    # 2 per top 20 aggettivi\n\
-    # 3 per top 20 verbi\n\
-    # 4 per top 10 PoS\n\
-    # 5 per top 10 trigrammi\n\
-    # 6 per probabilità congiunta\n\
-    # 7 per probabilità condizionata\n\
-    # 8 per top 10 sostantivi + agg.\n\
-    # 9 TBD\n\
-    # 0 per uscire\n')
-    choice = 9
+    choice = input('Premi:\n\
+    1 per top 20 token punteggiatura esclusa\n\
+    2 per top 20 aggettivi\n\
+    3 per top 20 verbi\n\
+    4 per top 10 PoS\n\
+    5 per top 10 trigrammi\n\
+    6 per probabilità congiunta\n\
+    7 per probabilità condizionata\n\
+    8 per top 10 sostantivi + agg.\n\
+    9 TBD\n\
+    0 per uscire\n')
 
     while choice != 0:
+        records = []
         if choice == 1: # tabella senza punteggiatura
             headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
-            records = []
             for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
                 records.append([a, b, c, d])
             print '\n', tabulate(records, headers)
         elif choice == 2: # tabella aggettivi
             headers = ['top 20 AGGETTIVI\n'+m.name, 'freq.', 'top 20 AGGETTIVI\n'+f.name, 'freq.']
-            records = []
             for (a, b), (c, d) in zip(m.top20['adj'],f.top20['adj']):
                 records.append([a, b, c, d])
             print '\n', tabulate(records, headers)
         elif choice == 3: # tabella verbi
             headers = ['top 20 VERBI\n'+m.name, 'freq.', 'top 20 VERBI\n'+f.name, 'freq.']
-            records = []
             for (a, b), (c, d) in zip(m.top20['verb'],f.top20['verb']):
                 records.append([a, b, c, d])
             print '\n', tabulate(records, headers)
         elif choice == 4: # tabella top 10 parts of speech
             headers = ['top 10 POS_tags\n'+m.name, 'freq.', 'top 10 POS_tags\n'+f.name, 'freq.']
-            records = []
             for (a, b), (c, d) in zip(m.top10tags, f.top10tags):
                 records.append([a, b, c, d])
             print '\n', tabulate(records, headers)
         elif choice == 5: # tabella trigrammi
             headers = ['top 10 trigrams\n'+m.name, 'freq.', 'top 10 trigrams\n'+f.name, 'freq.']
-            records = []
             for ((onem, twom, threem), freqm),((onef, twof, threef), freqf) in zip(m.top10trigrams, f.top10trigrams):
                 records.append([(onem, twom, threem), freqm, (onef, twof, threef), freqf])
             print '\n', tabulate(records, headers)
         elif choice == 6: # probabilità congiunta
             headers = ['MASCHI\nbigrammi', 'prob.\ncongiunta', 'FEMMINE\nbigrammi', 'prob.\ncongiunta']
-            records = []
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
-            print '\n', tabulate(records, headers)
+            print '\n', tabulate(records, headers, floatfmt=".2f")
             # NOTE: SISTEMARE OUTPUT
         elif choice == 7: # probabilità condizionata
             headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
-            records = []
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers)
@@ -187,9 +177,9 @@ def main():
             comb['fdistBI'] = nltk.FreqDist(comb['small'])
             headers = ['aggettivo', 'local mutual\ninformation']
             for n in comb['top20NN']: # per ogni sostantivo da analizzare
-                LMI = 0.0
-                records = [] # pulisco la tabella
-                JJeLMI_Tuples = [] # azzero le tuple
+                records = [] # azzero la tabella ad ogni passaggio
+                LMI = 0.0 # ricalcolo LMI
+                JJeLMI_Tuples = [] # azzero le tuple da stampare
                 for b in comb['small']: # per ogni bigramma
                     if b[1]==n[0] and b[0] in comb['adj']: # se il sostantivo è quello che cerco
                         freq_NN = comb['tokens'].count(b[1])
@@ -205,12 +195,11 @@ def main():
                 print tabulate(records, headers, floatfmt=".2f"), '\n'
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
-            records = []
             headers = ['MASCHI\nGPE', 'frequenza', 'FEMMINE\nGPE', 'frequenza']
             for (GPE1, F1),(GPE2, F2) in zip(m.namentity(), f.namentity()):
                 records.append([GPE1, F1, GPE2, F2])
             print '\n', tabulate(records, headers)
-        choice = 0 # uscita automatica
+        choice = input()
     return
 
 # >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
