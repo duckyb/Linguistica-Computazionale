@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
 import sys, codecs, nltk, re, math
 from nltk import FreqDist, bigrams, trigrams
 from tabulate import tabulate # libreria per output tabulari
 
-class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le dovute analisi
+class Corpus: # creo classi Corpus, per ciasuna delle quali faccio le dovute analisi
     def __init__ (self, path, name):
         self.path = path # percorso del file
         self.name = name # nome del corpus
@@ -42,15 +41,10 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
 
     def top20_no_punct(self):
         punct = re.compile(r'[^\w]') # punctuations
-        tokenlist_noPunct = [i for i in self.tokens if not punct.match(i)]
-        return FreqDist(tokenlist_noPunct).most_common(20)
+        return FreqDist([i for i in self.tokens if not punct.match(i)]).most_common(20)
 
     def top20_partsofspeech(self, t):
-        a = []
-        for token, tag in self.pos_tag:
-            if tag.startswith(t):
-                a.append(token)
-        return FreqDist(a).most_common(20)
+        return FreqDist([token for token, tag in self.pos_tag if tag.startswith(t)]).most_common(20)
 
     def t10t(self):
         tuples = FreqDist(self.pos_tag).most_common()
@@ -121,8 +115,6 @@ class Combine: # unisco determinati valori di due Corpus
             print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
             print tabulate(records, headers, floatfmt=".2f"), '\n'
 
-
-
 # S U P P O R T O
 
 def getKey(e): 
@@ -145,7 +137,7 @@ def main():
     0 per uscire\n')
 
     while choice != 0:
-        records = []
+        records = [] # reset dei records da stampare
         if choice == 1: # tabella senza punteggiatura
             headers = ['top 20 token\n'+m.name, 'freq.', 'top 20 token\n'+f.name, 'freq.']
             for (a, b), (c, d) in zip(m.top20['noPunct'],f.top20['noPunct']):
@@ -175,7 +167,7 @@ def main():
             headers = ['MASCHI\nbigrammi', 'prob.\ncongiunta', 'FEMMINE\nbigrammi', 'prob.\ncongiunta']
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
-            print '\n', tabulate(records, headers, floatfmt=".2f")
+            print '\n', tabulate(records, headers, floatfmt=".2f") # l'ultimo parametro serve a visualizzare 2 valori decimali
         elif choice == 7: # probabilità condizionata
             headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
@@ -183,7 +175,7 @@ def main():
             print '\n', tabulate(records, headers)
         elif choice == 8: # sostantivi più frequenti combinati
             mf = Combine(m, f)
-            mf.lmi_tables()
+            mf.lmi_tables() # stampo tabelle della local mutual information su due Corpus combinati
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
             headers = ['MASCHI\nGPE', 'frequenza', 'FEMMINE\nGPE', 'frequenza']
