@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import codecs
-import nltk
-import math
+import sys, codecs, nltk, math
 from nltk import FreqDist
 from tabulate import tabulate # libreria per output tabulari
 
-sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 # >< >< >< >< >< CLASSI >< >< >< >< ><
 class Corpus:
     def __init__(self, path, name):
@@ -16,8 +12,8 @@ class Corpus:
         self.tokens = self.tokenized_text()
         self.phrases = self.phrase_count()
         self.tokens_charSum = self.char_sum()
-        self.v_growth = [] # li riempio dopo perché-
-        self.h_growth = [] # -non so a quanto mi devo fermare
+        self.v_growth = []
+        self.h_growth = []
         self.lex_rich = self.lexical_richness()
         self.pos_tag = nltk.pos_tag(self.tokens)
         self.postag_percent = self.pos_distribution('percentuali')
@@ -98,10 +94,6 @@ class Corpus:
                 ]
 
 def main():
-    # istanziazione oggetti
-    m = Corpus('TBM.txt', 'travel blog maschi')
-    f = Corpus('TBF.txt', 'travel blog femmine')
-
     if len(m.tokens) >= len(f.tokens):  # tolgo le ultime 3 cifre del minore
         step = int(len(m.tokens)/1000)
     else:
@@ -109,6 +101,7 @@ def main():
     m.h_growth, m.v_growth = m.hapax_vocabulary_growth(step)
     f.h_growth, f.v_growth = f.hapax_vocabulary_growth(step)
     # tabella
+    print '\n> ANALISI BASILARI <'
     headers = ['\ncorpora', '\nfrasi', '\ntoken', 'media\ntoken/frase', 'media\nchar/token']
     records = [
         [m.name, m.phrases, len(m.tokens), len(m.tokens)/m.phrases, m.tokens_charSum/len(m.tokens)],
@@ -149,4 +142,9 @@ def main():
         records[1].append(f.medie[i])
     print tabulate(records, headers, tablefmt = 'psql')
 
+# >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
+sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+files = ['TBM.txt', 'TBF.txt']
+m = Corpus(files[0], 'travel blog maschi')
+f = Corpus(files[1], 'travel blog femmine')
 main()
