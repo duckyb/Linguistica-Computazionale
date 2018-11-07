@@ -30,7 +30,7 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
 
     def tokenized_text(self):
         # T O K E N I Z Z A
-        corpora = codecs.open(self.path, "r", "utf-8")
+        corpora = codecs.open(self.path, "r", "utf-8-sig")
         raw = corpora.read()
         phrases = sent_tokenizer.tokenize(raw.lower())
         tokenList = []
@@ -75,6 +75,20 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
             self.bigram_data['joined'].append([b, prob_joined])
         self.bigram_data['joined'].sort(key=getKey, reverse=True)
         self.bigram_data['joined'] = self.bigram_data['joined'][:10]
+
+    def namentity(self):
+        # N A M E D - E N T I T Y
+        names = []
+        tree = nltk.ne_chunk(self.pos_tag)
+        IOBformat = nltk.tree2conllstr(tree)
+        for branch in tree:
+            NE = ''
+            if hasattr(branch, 'label'):
+                if nodo.label in ['PERSON', 'GPE', 'ORGANIZATION']:
+                    for partNE in nodo.leaves():
+                        NE = NE + ' ' + partNE[0]
+                    names.append(NE)
+        return names
 
 # S U P P O R T O
 
@@ -136,7 +150,7 @@ def main():
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers)
-            # NOTA: SISTEMARE OUTPUT
+            # NOTE: SISTEMARE OUTPUT
         elif choice == 7: # probabilità condizionata
             headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
             records = []
@@ -193,7 +207,7 @@ def main():
                 print tabulate(records, headers, floatfmt=".2f"), '\n'
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
-            pass # ! da fare
+            print f.namentity()
         choice = 0 # uscita automatica
     return
 
