@@ -8,6 +8,8 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
     def __init__ (self, path, name):
         self.path = path # percorso del file
         self.name = name # nome del corpus
+        with codecs.open(self.path, "r", "utf-8") as sent:
+            self.raw = sent.read()
         self.pos_tag = [] # [ (part_of_speech, token) ]
         self.tokens = self.tokenized_text() # lista dei token
         self.top20 = {
@@ -30,14 +32,11 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
 
     def tokenized_text(self):
         # T O K E N I Z Z A
-        corpora = codecs.open(self.path, "r", "utf-8-sig")
-        raw = corpora.read()
-        phrases = sent_tokenizer.tokenize(raw.lower())
+        phrases = sent_tokenizer.tokenize(self.raw.lower())
         tokenList = []
         for p in phrases:
             tokens = nltk.word_tokenize(p)
             tokenList += tokens
-        corpora.close()
         self.pos_tag = nltk.pos_tag(tokenList)
         return tokenList
 
@@ -77,20 +76,17 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
         self.bigram_data['joined'] = self.bigram_data['joined'][:10]
 
     def namentity(self):
-        # N A M E D - E N T I T Y
+        # N A M E D   E N T I T Y
+        tree = nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(self.raw))) # ne_chunk necessita della suddivisione per frasi
         names = []
-        tree = nltk.ne_chunk(self.pos_tag)
         for branch in tree:
-            print branch
             NE = ''
             if hasattr(branch, 'label'):
-                print('ha label')
                 if branch.label() in ['GPE']:
-                    print('ha gpe')
                     for leaf in branch.leaves():
                         NE = NE + ' ' + leaf[0]
                         names.append(NE)
-        return True
+        return nltk.FreqDist(names).most_common(20)
 
 # S U P P O R T O
 
@@ -209,7 +205,11 @@ def main():
                 print tabulate(records, headers, floatfmt=".2f"), '\n'
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
-            print m.namentity()
+            records = []
+            headers = ['MASCHI\nGPE', 'frequenza', 'FEMMINE\nGPE', 'frequenza']
+            for (GPE1, F1),(GPE2, F2) in zip(m.namentity(), f.namentity()):
+                records.append([GPE1, F1, GPE2, F2])
+            print '\n', tabulate(records, headers)
         choice = 0 # uscita automatica
     return
 
