@@ -88,9 +88,46 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
                         names.append(NE)
         return FreqDist(names).most_common(20)
 
+class Combine: # unisco determinati valori di due Corpus
+    def __init__(self, foo, bar):
+        self.tokens  = foo.tokens + bar.tokens
+        self.tags    = foo.pos_tag + bar.pos_tag # pos_tag combinati
+        self.top20NN = FreqDist([token for token, tag in self.tags if tag.startswith('NN')]).most_common(20) # (sost, freq) combinati
+        self.nouns   = [n for n, fre in self.top20NN] # sost combinati
+        self.adj     = [token for token, tag in self.tags if tag.startswith('JJ')] # aggettivi combinati
+        self.fdistJJ = nltk.FreqDist(self.adj) # fdist aggettivi combinati
+        self.bigrams = foo.bigram_data['bigrams'] + bar.bigram_data['bigrams'] # bigrammi combinati
+        self.unique  = set(self.bigrams) # bigrammi senza duplicati
+        self.small   = [i for i in self.unique if (i[1] in self.nouns) and (i[0] in self.adj)] # lista contenente solo i bigrammi che mi interessano
+        self.fdistBI = nltk.FreqDist(self.small) # fdist bigrammi combinati                    
+    
+    def lmi_tables(self): # calcolo LMI dei bigrammi selezionati e produco tabelle
+        headers = ['aggettivo', 'local mutual\ninformation']
+        for n in self.top20NN:
+            records = []
+            LMI = 0.0
+            JJeLMI_Tuples = []
+            for b in self.small:
+                if b[1]==n[0] and b[0] in self.adj: # se il sostantivo è quello che cerco
+                    freq_NN = self.tokens.count(b[1])
+                    freq_JJ = self.tokens.count(b[0])
+                    freq_observed = self.fdistBI[b]
+                    freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(self.tokens)*1.0)
+                    LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
+                    JJeLMI_Tuples.append((b[0], LMI)) # genero una tupla JJ + LMI
+            JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
+            for e1, e2 in JJeLMI_Tuples:
+                records.append([e1, e2])
+            print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
+            print tabulate(records, headers, floatfmt=".2f"), '\n'
+
+
+
 # S U P P O R T O
 
-def getKey(e): # per ordinare in base al secondo elemento di coppie
+def getKey(e): 
+    # per ordinare in base al secondo elemento di coppie
+    # usato dalle classi: Corpus, Combine
     return e[1]
 
 def main():
@@ -139,60 +176,14 @@ def main():
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['joined'],f.bigram_data['joined']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers, floatfmt=".2f")
-            # NOTE: SISTEMARE OUTPUT
         elif choice == 7: # probabilità condizionata
             headers = ['MASCHI\nbigrammi', 'prob.\ncondizionata', 'FEMMINE\nbigrammi', 'prob.\ncondizionata']
             for [bigram_a, freq_a], [bigram_b, freq_b] in zip(m.bigram_data['condit'],f.bigram_data['condit']):
                 records.append([bigram_a, str(freq_a*100) + ' %', bigram_b, str(freq_b*100) + ' %'])
             print '\n', tabulate(records, headers)
         elif choice == 8: # sostantivi più frequenti combinati
-            comb = { # combino elementi di m ed f
-                'tokens' : [], # token combinati
-                'tags'   : [], # pos_tag combinati
-                'top20NN': [], # (sost, freq) combinati
-                'nouns'  : [], # sost combinati
-                'adj'    : [], # aggettivi combinati
-                'fdistJJ': [], # fdist aggettivi combinati
-                'bigrams': [], # bigrammi combinati
-                'fdistBI': [], # fdist bigrammi combinati
-                'unique' : [], # bigrammi senza duplicati
-                'small'  : [], # lista contenente solo i bigrammi che mi interessano
-            }
-            comb['tokens'] = m.tokens
-            comb['tokens'].extend(f.tokens)
-            comb['tags'] = m.pos_tag
-            comb['tags'].extend(f.pos_tag) 
-            NN_list = []
-            for token, tag in comb['tags']:
-                if tag.startswith('NN'):
-                    NN_list.append(token)
-            comb['top20NN'] = FreqDist(NN_list).most_common(20)
-            comb['nouns'] = [n for n, fre in comb['top20NN']]
-            comb['adj'] = [token for token, tag in comb['tags'] if tag.startswith('JJ')]
-            comb['fdist_JJ'] = nltk.FreqDist(comb['adj'])
-            comb['bigrams'] = m.bigram_data['bigrams']
-            comb['bigrams'].extend(f.bigram_data['bigrams'])
-            comb['unique'] = set(comb['bigrams'])
-            comb['small'] = [i for i in comb['unique'] if (i[1] in comb['nouns']) and (i[0] in comb['adj'])]
-            comb['fdistBI'] = nltk.FreqDist(comb['small'])
-            headers = ['aggettivo', 'local mutual\ninformation']
-            for n in comb['top20NN']: # per ogni sostantivo da analizzare
-                records = [] # azzero la tabella ad ogni passaggio
-                LMI = 0.0 # ricalcolo LMI
-                JJeLMI_Tuples = [] # azzero le tuple da stampare
-                for b in comb['small']: # per ogni bigramma
-                    if b[1]==n[0] and b[0] in comb['adj']: # se il sostantivo è quello che cerco
-                        freq_NN = comb['tokens'].count(b[1])
-                        freq_JJ = comb['tokens'].count(b[0])
-                        freq_observed = comb['fdistBI'][b]
-                        freq_expected = ((freq_JJ*1.0)*(freq_NN*1.0))/(len(comb['tokens'])*1.0)
-                        LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
-                        JJeLMI_Tuples.append((b[0], LMI)) # genero una tupla JJ + LMI
-                JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
-                for e1, e2 in JJeLMI_Tuples:
-                    records.append([e1, e2])
-                print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
-                print tabulate(records, headers, floatfmt=".2f"), '\n'
+            mf = Combine(m, f)
+            mf.lmi_tables()
 
         elif choice == 9: # 20 nomi propri di luogo più frequenti
             headers = ['MASCHI\nGPE', 'frequenza', 'FEMMINE\nGPE', 'frequenza']
