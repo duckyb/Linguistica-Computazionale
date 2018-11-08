@@ -97,11 +97,11 @@ class Combine: # unisco determinati valori di due Corpus
     
     def lmi_tables(self): # calcolo LMI dei bigrammi selezionati e produco tabelle
         headers = ['aggettivo', 'local mutual\ninformation']
-        for n in self.top20NN:
+        for n in self.top20NN: # per ciascuno dei 20 sostantivi
             records = []
             LMI = 0.0
             JJeLMI_Tuples = []
-            for b in self.small:
+            for b in self.small: # controllo ogni bigramma (aggettivo, sostantivo) del testo
                 if b[1]==n[0] and b[0] in self.adj: # se il sostantivo è quello che cerco
                     freq_NN = self.tokens.count(b[1])
                     freq_JJ = self.tokens.count(b[0])
@@ -110,8 +110,7 @@ class Combine: # unisco determinati valori di due Corpus
                     LMI = (freq_observed*1.0)*math.log((freq_observed*1.0)/(freq_expected*1.0), 2)
                     JJeLMI_Tuples.append((b[0], LMI)) # genero una tupla JJ + LMI
             JJeLMI_Tuples.sort(key=getKey, reverse=True) # ho finito; ordino le tuple x LMI
-            for e1, e2 in JJeLMI_Tuples:
-                records.append([e1, e2])
+            records = [e for e in JJeLMI_Tuples] # inserisco le nuove tuple nel record pronte per l'output
             print 'Sostantivo: '+ str(n[0]) +' - Occorrenze: '+ str(n[1])+'\n'
             print tabulate(records, headers, floatfmt=".2f"), '\n'
 
