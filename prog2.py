@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+# ============== DIPENDENZE ==============
 import sys, codecs, nltk, re, math
 from nltk import FreqDist, bigrams, trigrams
 from tabulate import tabulate # libreria per output tabulari
-
+# ==============   CLASSI   ==============
 class Corpus: # creo classi Corpus, per ciasuna delle quali faccio le dovute analisi
     def __init__ (self, path, name):
         self.path = path # percorso del file
@@ -84,7 +85,7 @@ class Corpus: # creo classi Corpus, per ciasuna delle quali faccio le dovute ana
 
 class Combine: # unisco determinati valori di due Corpus
     def __init__(self, foo, bar):
-        self.tokens  = foo.tokens + bar.tokens
+        self.tokens  = foo.tokens + bar.tokens # concatenazione di array
         self.tags    = foo.pos_tag + bar.pos_tag # pos_tag combinati
         self.top20NN = FreqDist([token for token, tag in self.tags if tag.startswith('NN')]).most_common(20) # (sost, freq) combinati
         self.nouns   = [n for n, fre in self.top20NN] # sost combinati
@@ -115,7 +116,6 @@ class Combine: # unisco determinati valori di due Corpus
             print tabulate(records, headers, floatfmt=".2f"), '\n'
 
 # S U P P O R T O
-
 def getKey(e): 
     # per ordinare in base al secondo elemento di coppie
     # usato dalle classi: Corpus, Combine
@@ -183,8 +183,7 @@ def main():
             print '\n', tabulate(records, headers)
         choice = input()
     return
-
-# >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< >< ><
+# ==================================================================
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 files = ['TBM.txt', 'TBF.txt']
 m = Corpus(files[0], 'travel blog maschi')
