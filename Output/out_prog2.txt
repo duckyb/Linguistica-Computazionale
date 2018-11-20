@@ -1,0 +1,432 @@
+Premi:
+    1 per top 20 token punteggiatura esclusa
+    2 per top 20 aggettivi
+    3 per top 20 verbi
+    4 per top 10 PoS
+    5 per top 10 trigrammi
+    6 per probabilità congiunta
+    7 per probabilità condizionata
+    8 per top 10 sostantivi + agg.
+    9 per Geo-Political Entries
+    0 per uscire
+
+1
+
+top 20 token            freq.  top 20 token             freq.
+travel blog maschi             travel blog femmine
+--------------------  -------  ---------------------  -------
+the                       333  the                        472
+to                        222  to                         280
+and                       202  and                        265
+a                         191  a                          256
+you                       167  in                         213
+of                        157  of                         212
+in                        130  you                        150
+i                         126  it                         116
+it                        122  for                        113
+is                        119  with                        99
+that                      101  i                           80
+for                        68  is                          77
+n't                        61  on                          77
+your                       58  at                          73
+as                         50  are                         60
+or                         49  from                        60
+class                      48  as                          59
+are                        47  that                        52
+be                         46  your                        52
+this                       46  we                          52
+
+2
+
+top 20 AGGETTIVI        freq.  top 20 AGGETTIVI         freq.
+travel blog maschi             travel blog femmine
+--------------------  -------  ---------------------  -------
+i                          34  i                           21
+middle                     31  many                        19
+other                      24  more                        18
+own                        24  best                        18
+more                       20  few                         15
+new                        13  armenian                    15
+much                       11  old                         12
+easy                       11  japanese                    10
+such                        9  small                        9
+good                        9  other                        9
+many                        9  new                          8
+great                       8  full                         8
+nomadic                     8  next                         8
+most                        8  cat                          8
+only                        8  different                    8
+best                        8  unique                       8
+few                         7  incredible                   8
+free                        7  good                         7
+american                    7  first                        7
+first                       6  white                        7
+
+3
+
+top 20 VERBI            freq.  top 20 VERBI             freq.
+travel blog maschi             travel blog femmine
+--------------------  -------  ---------------------  -------
+is                        119  is                          77
+'s                         81  are                         60
+are                        47  's                          57
+be                         46  was                         38
+do                         41  're                         33
+'re                        40  do                          31
+have                       31  get                         26
+was                        31  see                         25
+get                        25  has                         25
+i                          23  be                          24
+being                      22  have                        22
+make                       20  find                        17
+'ve                        16  take                        16
+'m                         16  had                         15
+been                       14  make                        14
+has                        14  visit                       13
+working                    13  i                           13
+want                       13  want                        12
+did                        13  've                         12
+work                       12  were                        11
+
+4
+
+top 10 POS_tags         freq.  top 10 POS_tags          freq.
+travel blog maschi             travel blog femmine
+--------------------  -------  ---------------------  -------
+NN                        601  NN                         960
+JJ                        334  JJ                         547
+NNS                       208  NNS                        390
+VB                        153  VB                         208
+RB                        136  RB                         134
+VBG                       108  VBN                        133
+VBN                        84  VBG                        114
+VBP                        75  VBD                        112
+VBD                        63  CD                         106
+CD                         55  VBP                         89
+
+5
+
+top 10 trigrams         freq.  top 10 trigrams          freq.
+travel blog maschi             travel blog femmine
+--------------------  -------  ---------------------  -------
+('DT', 'JJ', 'NN')        167  ('IN', 'DT', 'NN')         203
+('IN', 'DT', 'NN')        125  ('DT', 'JJ', 'NN')         194
+('DT', 'NN', 'IN')         85  ('NN', 'IN', 'DT')         122
+('JJ', 'NN', 'IN')         77  ('IN', 'DT', 'JJ')         114
+('NN', 'IN', 'DT')         76  ('DT', 'NN', 'IN')         114
+('IN', 'DT', 'JJ')         70  ('NN', 'IN', 'NN')          98
+('NN', 'IN', 'NN')         51  ('JJ', 'NN', 'IN')          86
+('IN', 'PRP', 'VBP')       46  ('JJ', 'NN', 'NN')          82
+('DT', 'NN', '.')          45  ('DT', 'NN', 'NN')          67
+('JJ', 'NN', '.')          44  ('NNS', 'IN', 'DT')         65
+
+6
+
+MASCHI        prob.            FEMMINE        prob.
+bigrammi      congiunta        bigrammi       congiunta
+------------  ---------------  -------------  ---------------
+('DT', 'NN')  4.21602787456 %  ('JJ', 'NN')   4.23838608181 %
+('JJ', 'NN')  3.86759581882 %  ('DT', 'NN')   4.14584490098 %
+('NN', 'IN')  3.07781649245 %  ('IN', 'DT')   3.73866370535 %
+('IN', 'DT')  2.84552845528 %  ('NN', 'IN')   3.66463076069 %
+('DT', 'JJ')  2.53193960511 %  ('NN', 'NN')   3.09087543957 %
+('NN', '.')   1.97444831591 %  ('DT', 'JJ')   2.62816953544 %
+('IN', 'NN')  1.77700348432 %  ('NN', '.')    2.41532481954 %
+('TO', 'VB')  1.76538908246 %  ('IN', 'NN')   2.24875069406 %
+('NN', ',')   1.66085946574 %  ('NN', ',')    2.08217656857 %
+('NN', 'CC')  1.37049941928 %  ('JJ', 'NNS')  1.94336479733 %
+
+7
+
+MASCHI                     prob.           FEMMINE                 prob.
+bigrammi                   condizionata    bigrammi                condizionata
+-------------------------  --------------  ----------------------  --------------
+(u'unleash', u'yourself')  100.0 %         (u'las', u'vegas')      100.0 %
+(u'wasters', u'in')        100.0 %         (u'cartoons', u'on')    100.0 %
+(u'movies', u'.')          100.0 %         (u'arenal', u'costa')   100.0 %
+(u'borneo', u',')          100.0 %         (u'packed', u'up')      100.0 %
+(u'fd', u'reason')         100.0 %         (u'vintage', u'shops')  100.0 %
+(u'preparation', u'or')    100.0 %         (u'separate', u'the')   100.0 %
+(u'ikea', u'furniture')    100.0 %         (u'brand', u'new')      100.0 %
+(u'deeply', u'mislead')    100.0 %         (u'er', u'or')          100.0 %
+(u'wanting', u'to')        100.0 %         (u'feline', u'.')       100.0 %
+(u'last', u'big')          100.0 %         (u'9.', u'shop')        100.0 %
+
+8
+
+Sostantivo: i - Occorrenze: 106
+
+aggettivo      local mutual
+                information
+-----------  --------------
+overall                6.56
+else                   2.86
+travel                 2.24
+armenia                1.97
+america                1.91
+
+Sostantivo: world - Occorrenze: 62
+
+aggettivo      local mutual
+                information
+-----------  --------------
+whichever              8.29
+diverse                7.29
+borderless             6.71
+small                  4.83
+different              4.48
+new                    3.90
+
+Sostantivo: class - Occorrenze: 51
+
+aggettivo          local mutual
+                    information
+---------------  --------------
+capital-rich               8.57
+labor-providing            8.57
+capital-owned              8.57
+capitalistic               7.57
+crossfit                   7.57
+yoga                       6.25
+new                        4.18
+middle                     3.44
+only                       3.36
+
+Sostantivo: country - Occorrenze: 37
+
+aggettivo      local mutual
+                information
+-----------  --------------
+land-locked            9.04
+polarizing             9.04
+anglo-saxon            8.04
+regular                7.45
+western                7.45
+exotic                 6.23
+amazing                6.23
+first                  5.34
+other                  3.99
+only                   3.83
+
+Sostantivo: people - Occorrenze: 37
+
+aggettivo      local mutual
+                information
+-----------  --------------
+insane                 8.04
+regular                7.45
+happy                  6.71
+japanese               5.58
+much                   4.51
+many                   4.23
+most                   4.13
+other                  3.99
+more                   3.28
+
+Sostantivo: time - Occorrenze: 37
+
+aggettivo      local mutual
+                information
+-----------  --------------
+precious               8.04
+biggest                7.45
+same                   7.45
+perfect                6.71
+hard                   6.45
+wait                   6.23
+next                   5.58
+first                  5.34
+much                   4.51
+
+Sostantivo: capital - Occorrenze: 36
+
+aggettivo      local mutual
+                information
+-----------  --------------
+invisible              8.08
+political              8.08
+nomad                  7.08
+big                    5.75
+old                    5.27
+new                    4.68
+own                    4.03
+
+Sostantivo: things - Occorrenze: 30
+
+aggettivo      local mutual
+                information
+-----------  --------------
+certain                9.34
+useless                8.34
+stupid                 7.75
+weird                  7.02
+sell                   6.75
+amazing                6.53
+top                    6.34
+great                  5.53
+few                    4.88
+best                   4.58
+only                   4.13
+do                     3.15
+
+Sostantivo: tokyo - Occorrenze: 28
+
+aggettivo      local mutual
+                information
+-----------  --------------
+lockup                 8.96
+downtown               7.96
+central                6.64
+cafes                  6.15
+
+Sostantivo: place - Occorrenze: 28
+
+aggettivo       local mutual
+                 information
+------------  --------------
+inexpensive             9.39
+spooky                  9.39
+special                 7.80
+fantastic               7.80
+kid-friendly            7.39
+nice                    7.39
+awesome                 7.07
+hard                    6.80
+popular                 6.39
+beautiful               6.07
+good                    5.39
+
+Sostantivo: family - Occorrenze: 27
+
+aggettivo      local mutual
+                information
+-----------  --------------
+wonderful              9.49
+entire                 7.49
+whole                  6.68
+nicaragua              5.32
+rica                   5.10
+
+Sostantivo: way - Occorrenze: 26
+
+aggettivo      local mutual
+                information
+-----------  --------------
+milky                  9.54
+platonic               9.54
+efficient              8.54
+bedouin                8.54
+fun                    6.74
+american               6.74
+unique                 6.37
+great                  5.74
+different              5.74
+best                   4.79
+
+Sostantivo: day - Occorrenze: 26
+
+aggettivo      local mutual
+                information
+-----------  --------------
+freaking               9.54
+1-2                    9.54
+3-4                    9.54
+clear                  7.96
+nice                   7.54
+popular                6.54
+next                   6.09
+other                  4.50
+
+Sostantivo: life - Occorrenze: 25
+
+aggettivo      local mutual
+                information
+-----------  --------------
+daily                  8.60
+real                   6.79
+incredible             6.43
+armenian               5.60
+good                   5.60
+
+Sostantivo: city - Occorrenze: 23
+
+aggettivo      local mutual
+                information
+-----------  --------------
+pleasant               9.72
+cheapest               9.72
+largest                8.72
+western                8.14
+mexico                 7.40
+japanese               6.26
+different              5.91
+
+Sostantivo: money - Occorrenze: 23
+
+aggettivo         local mutual
+                   information
+--------------  --------------
+asset-time-for            9.72
+enough                    6.72
+such                      6.26
+
+Sostantivo: japan - Occorrenze: 22
+
+aggettivo    local mutual
+             information
+-----------  --------------
+
+Sostantivo: years - Occorrenze: 21
+
+aggettivo      local mutual
+                information
+-----------  --------------
+recent                 9.85
+light                  7.85
+ten                    7.53
+few                    5.39
+many                   5.05
+
+Sostantivo: america - Occorrenze: 21
+
+aggettivo      local mutual
+                information
+-----------  --------------
+latin                  7.60
+central                7.28
+
+Sostantivo: days - Occorrenze: 20
+
+aggettivo      local mutual
+                information
+-----------  --------------
+lazy                   7.34
+few                    5.46
+most                   5.02
+other                  4.88
+
+9
+
+MASCHI            frequenza  FEMMINE       frequenza
+GPE                          GPE
+--------------  -----------  ----------  -----------
+Thailand                 17  Tokyo                24
+America                  16  Armenia              22
+India                    11  Japan                21
+Russia                    7  Armenian             15
+American                  6  Japanese             10
+Bali                      3  Nicaragua             7
+Bangkok                   3  Sharm                 7
+Indonesia                 3  Egypt                 4
+Brazilian                 3  Costa                 4
+Eastern                   2  Shinjuku              4
+Eastern Europe            2  Costa Rica            3
+Chiang                    2  Sinai                 3
+Mexico                    2  Yerevan               3
+England                   2  Mexico                3
+Australia                 1  Shibuya               3
+Europe                    1  Granada               3
+China                     1  Europe                2
+US                        1  English               2
+New York                  1  New Year              2
+California                1  Hong Kong             2

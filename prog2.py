@@ -104,7 +104,7 @@ def main():
     6 per probabilità congiunta\n\
     7 per probabilità condizionata\n\
     8 per top 10 sostantivi + agg.\n\
-    9 TBD\n\
+    9 per Geo-Political Entries\n\
     0 per uscire\n')
 
     while choice != 0:
