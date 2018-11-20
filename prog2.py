@@ -8,7 +8,7 @@ class Corpus: # creo un elemento di tipo Corpus, per ciasuno dei quali faccio le
     def __init__ (self, path, name):
         self.path = path # percorso del file
         self.name = name # nome del corpus
-        with codecs.open(self.path, 'r', 'utf-8') as doc: # apro il documento
+        with codecs.open(self.path, 'r', 'utf-8-sig') as doc: # apro il documento
             self.raw = doc.read() # assegno a raw il mio testo
         self.pos_tag = [] # [ (part_of_speech, token), (...) ]
         self.tokens = self.tokenized_text() # lista dei token
