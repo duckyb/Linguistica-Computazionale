@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 # ============== DIPENDENZE ==============
 import sys, codecs, nltk, math
-from nltk import FreqDist
+from nltk import FreqDist, word_tokenize, pos_tag
 from tabulate import tabulate # libreria per output tabulari
 # ==============   CLASSI   ==============
 class Corpus:
     def __init__(self, path, name):
-        self.path = path
-        self.name = name
-        self.phrases = None
-        self.tokens = self.tokenized_text()
-        self.tokens_charSum = sum(len(i) for i in self.tokens)
-        self.v_growth = []
-        self.h_growth = []
-        self.lex_rich = float(len(set(self.tokens[:5000]))) / 5000
-        self.pos_tag = nltk.pos_tag(self.tokens)
-        self.postag_percent = self.pos_distribution('percentuali')
-        self.medie = self.pos_distribution('medie')
-        
+        self.path = path # percorso del corpus
+        self.name = name # nome del corpus
+        self.phrases = None # suddivisione in frasi
+        self.tokens = self.tokenized_text() # suddivisione in tokens
+        self.tokens_charSum = sum(len(i) for i in self.tokens) # totale di caratteri dei token
+        self.v_growth = [] # vocabulary growth
+        self.h_growth = [] # hapax growth
+        self.lex_rich = float(len(set(self.tokens[:5000]))) / 5000 # lexical richness
+        self.pos_tags = pos_tag(self.tokens) # suddivisione in part-of-speech tags
+        self.postag_percent = self.pos_distribution('percentuali') # percentuali di part-of-speech tags
+        self.medie = self.pos_distribution('medie') # media x frase di part-of-speech
+
     def hapax_vocabulary_growth(self, n):
         hg = [0] * n
         vg = [0] * n
@@ -31,14 +31,10 @@ class Corpus:
             raw = corpora.read()
             phrases = sent_tokenizer.tokenize(raw.lower())
             self.phrases = len(phrases)
-            c = []
-            for p in phrases:
-                tokens = nltk.word_tokenize(p)
-                c += tokens
-        return c
+            return [token for p in phrases for token in word_tokenize(p)] # comprensione di lista annidata
 
     def pos_distribution(self, request):
-        tag_distrib = nltk.FreqDist(tag for (word, tag) in self.pos_tag)
+        tag_distrib = FreqDist(tag for (word, tag) in self.pos_tags)
         tot = {'noun': 0, 'adj':0, 'verb':0, 'pron':0}
         for t, n in tag_distrib.most_common(): # tuple unpacking
             if t.startswith('NN'): # sostantivi
@@ -50,19 +46,9 @@ class Corpus:
             elif t.startswith(('PR','WH')):
                 tot['pron'] += n
         if request is 'percentuali':
-            return [ # calcolo percentuali
-                tot['noun'] / float(len(self.tokens)) * 100,
-                tot['adj'] / float(len(self.tokens)) * 100,
-                tot['verb'] / float(len(self.tokens)) * 100,
-                tot['pron'] / float(len(self.tokens)) * 100
-                ]
+            return [tot[key]/float(len(self.tokens))*100 for key in tot]
         elif request is 'medie':
-            return [ # calcolo medie
-                tot['noun']/self.phrases,
-                tot['adj']/self.phrases,
-                tot['verb']/self.phrases,
-                tot['pron']/self.phrases
-                ]
+            return [tot[key]/float(self.phrases) for key in tot]
 
 def main():
     if len(m.tokens) >= len(f.tokens):  # tolgo le ultime 3 cifre del minore
@@ -71,7 +57,7 @@ def main():
         step = int(len(m.tokens)/1000)
     m.h_growth, m.v_growth = m.hapax_vocabulary_growth(step)
     f.h_growth, f.v_growth = f.hapax_vocabulary_growth(step)
-    # tabella
+    # tabella analisi più semplici
     print '\n> ANALISI BASILARI <'
     headers = ['\ncorpora', '\nfrasi', '\ntoken', 'media\ntoken/frase', 'media\nchar/token']
     records = [
@@ -79,21 +65,21 @@ def main():
         [f.name, f.phrases, len(f.tokens), len(f.tokens)/f.phrases, f.tokens_charSum/len(f.tokens)]
     ]
     print tabulate(records, headers)
-    # tabella
+    # tabella crescita vocabolario
     print '\n> CRESCITA VOCABOLARIO OGNI 1000 TOKEN <'
     headers = [m.name, f.name]
     records = zip(m.v_growth, f.v_growth)
     print tabulate(records, headers)
-    # tabella
+    # tabella crescita hapax
     print '\n> CRESCITA HAPAX OGNI 1000 TOKEN <'
     records = zip(m.h_growth, f.h_growth) # allineo crescita hapax
     print tabulate(records, headers)
-    # tabella
+    # tabella (type : token) ratio
     print '\n> TYPE/TOKEN RATIO @ 5000 TOKEN <'
     headers = ['corpora', 'lexical richness']
     records = [ [m.name, m.lex_rich], [f.name, f.lex_rich] ]
     print tabulate(records, headers)
-    # tabella
+    # tabella distribuzione di part-of-speech tags
     print '\n> DISTRIBUZIONE % TAG <'
     headers = ['corpora', '%Sostantivi', '%Aggettivi','%Verbi', '%Pronomi']
     records = [ [m.name], [f.name] ]
@@ -101,18 +87,18 @@ def main():
         records[0].append("%.2f" % m.postag_percent[i])
         records[1].append("%.2f" % f.postag_percent[i])
     print tabulate(records, headers)
-    # tabella
+    # tabella media di part-of-speech tags per frase
     print '\n> MEDIA TAG/FRASE <'
-    headers = ['corpora', '%Sostantivi', '%Aggettivi','%Verbi', '%Pronomi']
+    headers = ['corpora', 'Sostantivi', 'Aggettivi','Verbi', 'Pronomi']
     records = [[m.name],[f.name]]
     for i in range(4):
         records[0].append(m.medie[i])
         records[1].append(f.medie[i])
-    print tabulate(records, headers)
-
-# =====================================================================
-sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-files = ['TBM.txt', 'TBF.txt']
-m = Corpus(files[0], 'travel blog maschi')
-f = Corpus(files[1], 'travel blog femmine')
-main()
+    print tabulate(records, headers, floatfmt=".2f")
+    
+# ========================= GLOBAL SCOPE =========================
+sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')  # scelgo il tokenizzatore
+files = ['TBM.txt', 'TBF.txt']                                      # scelgo i due file da confrontare
+m = Corpus(files[0], 'travel blog maschi')                          # istanzio il primo corpus
+f = Corpus(files[1], 'travel blog femmine')                         # istanzio il secondo
+main()                                                              # avvio del programma
