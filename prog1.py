@@ -51,6 +51,7 @@ class Corpus:
             return [tot[key]/float(self.phrases) for key in tot]
 
 def main():
+# ========================= TABELLE =========================
     if len(m.tokens) >= len(f.tokens):  # tolgo le ultime 3 cifre del minore
         step = int(len(f.tokens)/1000)
     else:
