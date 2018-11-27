@@ -96,7 +96,7 @@ class Combine: # unisco determinati valori di due Corpus
         headers = ['aggettivo', 'local mutual\ninformation']
         for n in self.top20NN: # per ciascuno dei 20 sostantivi
             records = []
-            LMI = 0.0
+            LMI = 0.0 # inizializzo a float
             JJeLMI_Tuples = []
             for b in self.small: # controllo ogni bigramma (aggettivo, sostantivo) del testo
                 if b[1] == n[0] and b[0] in self.adj: # se il sostantivo è quello che cerco
@@ -112,7 +112,7 @@ class Combine: # unisco determinati valori di due Corpus
             print tabulate(records, headers, floatfmt=".2f"), '\n'
 
 def main():
-    #  M E N U - S E L E Z I O N E
+# ========================= MENU & TABELLE =========================
     choice = input('Premi:\n\
     1 per top 20 token punteggiatura esclusa\n\
     2 per top 20 aggettivi\n\
