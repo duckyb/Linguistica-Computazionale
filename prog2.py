@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# ============== DIPENDENZE ==============
+# =============== DIPENDENZE ===============
 import sys, codecs, nltk, re, math
 from nltk import FreqDist, bigrams, trigrams, word_tokenize, pos_tag, ne_chunk
 from tabulate import tabulate # libreria per output tabulari
-# ==============   CLASSI   ==============
+# ===============   CLASSI   ===============
 class Corpus: # creo classi Corpus, per ciasuna delle quali faccio le dovute analisi
     def __init__ (self, path, name):
         self.path = path # percorso del file
@@ -112,7 +112,7 @@ class Combine: # unisco determinati valori di due Corpus
             print tabulate(records, headers, floatfmt=".2f"), '\n'
 
 def main():
-# ========================= MENU & TABELLE =========================
+# =========================== MENU & TABELLE ===========================
     choice = input('Premi:\n\
     1 per top 20 token punteggiatura esclusa\n\
     2 per top 20 aggettivi\n\
@@ -172,7 +172,7 @@ def main():
             print '\n', tabulate(records, headers)
         choice = input() # attendo una nuova scelta (menu)
     return
-# ========================= GLOBAL SCOPE =========================
+# =========================== GLOBAL SCOPE ===========================
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')  # scelgo il tokenizzatore
 files = ['TBM.txt', 'TBF.txt']                                      # scelgo i due file da confrontare
 m = Corpus(files[0], 'travel blog maschi')                          # istanzio il primo corpus

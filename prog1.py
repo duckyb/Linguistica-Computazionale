@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# ============== DIPENDENZE ==============
+# =============== DIPENDENZE ===============
 import sys, codecs, nltk, math
 from nltk import FreqDist, word_tokenize, pos_tag
 from tabulate import tabulate # libreria per output tabulari
-# ==============   CLASSI   ==============
+# ===============   CLASSI   ===============
 class Corpus:
     def __init__(self, path, name):
         self.path = path # percorso del corpus
@@ -51,7 +51,7 @@ class Corpus:
             return [tot[key]/float(self.phrases) for key in tot]
 
 def main():
-# ========================= TABELLE =========================
+# =============== TABELLE ===============
     if len(m.tokens) >= len(f.tokens):  # tolgo le ultime 3 cifre del minore
         step = int(len(f.tokens)/1000)
     else:
@@ -97,7 +97,7 @@ def main():
         records[1].append(f.medie[i])
     print tabulate(records, headers, floatfmt=".2f")
     
-# ========================= GLOBAL SCOPE =========================
+# =========================== GLOBAL SCOPE ===========================
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')  # scelgo il tokenizzatore
 files = ['TBM.txt', 'TBF.txt']                                      # scelgo i due file da confrontare
 m = Corpus(files[0], 'travel blog maschi')                          # istanzio il primo corpus
